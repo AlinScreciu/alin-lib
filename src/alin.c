@@ -63,7 +63,13 @@ void v_pop_back(vector_t *vector)
 }
 void *v_pop_rback(vector_t *vector)
 {
-	fputs("Not implemented yet!\n", stderr);
+	if (vector->size > 0)
+	{
+		void *back = malloc(sizeof(void*));
+		memcpy(back, vector->arr[vector->size - 1], sizeof(void*));
+		free(vector->arr[vector->size--]);
+		return back;
+	}
 	return NULL;
 }
 // Empty the vector!
