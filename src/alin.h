@@ -12,6 +12,8 @@ typedef struct vector_t
     size_t size;
     size_t capacity;
 } vector_t;
+
+
 vector_t *v_new(); // done
 void v_resize(vector_t *vector, size_t n);
 void v_shrink(vector_t *vector);

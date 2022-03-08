@@ -28,11 +28,26 @@ vector_t *v_new()
 
 void v_resize(vector_t *vector, size_t n)
 {
-	fputs("Not implemented yet!\n", stderr);
+
+	void **oldarr = vector->arr;
+	vector->arr = (void **)reallocarray(vector->arr, n, sizeof(void *));
+	if (vector->arr != NULL)
+	{
+		vector->capacity = n;
+	}
+
+	if (oldarr != vector->arr)
+	{
+		for (size_t i = 0; i < vector->size; i++)
+		{
+			free(oldarr[i]);
+		}
+		free(oldarr);
+	}
 }
 void v_shrink(vector_t *vector)
 {
-	fputs("Not implemented yet!\n", stderr);
+	v_resize(vector, vector->size == 0 ? 8 : vector->size);
 }
 void v_at(vector_t *vector, size_t n)
 {
@@ -43,8 +58,9 @@ void v_back(vector_t *vector)
 	fputs("Not implemented yet!\n", stderr);
 }
 void *v_front(vector_t *vector)
-{	
-	if (vector->size == 0) return NULL;
+{
+	if (vector->size == 0)
+		return NULL;
 	return vector->arr[0];
 }
 void v_push_back(vector_t *vector, void *val)
@@ -65,8 +81,8 @@ void *v_pop_rback(vector_t *vector)
 {
 	if (vector->size > 0)
 	{
-		void *back = malloc(sizeof(void*));
-		memcpy(back, vector->arr[vector->size - 1], sizeof(void*));
+		void *back = malloc(sizeof(void *));
+		memcpy(back, vector->arr[vector->size - 1], sizeof(void *));
 		free(vector->arr[vector->size--]);
 		return back;
 	}
@@ -92,5 +108,13 @@ void v_rerase(vector_t *vector, size_t first, size_t last)
 }
 void v_clear(vector_t *vector)
 {
-	fputs("Not implemented yet!\n", stderr);
+	size_t size = vector->size;
+	if (size > 0)
+	{
+		for (size_t i = 0; i < size; i++)
+		{
+			free(vector->arr[i]);
+			vector->size--;
+		}
+	}
 }
