@@ -42,9 +42,10 @@ void v_back(vector_t *vector)
 {
 	fputs("Not implemented yet!\n", stderr);
 }
-void v_front(vector_t *vector)
-{
-	fputs("Not implemented yet!\n", stderr);
+void *v_front(vector_t *vector)
+{	
+	if (vector->size == 0) return NULL;
+	return vector->arr[0];
 }
 void v_push_back(vector_t *vector, void *val)
 {
